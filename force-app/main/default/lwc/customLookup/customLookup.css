@@ -1,0 +1,17 @@
+.slds-combobox__input {
+    box-shadow: none;
+}
+
+.slds-combobox__input.has-custom-error {
+    border: 1px solid rgb(234, 0, 30);
+    box-shadow: rgb(234, 0, 30) 0 0 0 1px inset;
+}
+
+.slds-combobox_container.has-custom-error {
+    border: none !important;
+}
+
+.form-error {
+    color: rgb(234, 0, 30);
+    display: block;
+}

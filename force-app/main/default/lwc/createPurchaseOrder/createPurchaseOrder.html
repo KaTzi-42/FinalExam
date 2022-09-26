@@ -1,0 +1,74 @@
+<template>
+    <lightning-quick-action-panel header="New Purchase Order">
+        <div class="slds-p-horizontal_medium">
+
+            <lightning-layout vertical-align="spread" multiple-rows="true">
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item size="6" class="slds-border_right">
+                            <lightning-input class="slds-p-around_small"
+                                             type="text"
+                                             onchange={handleNameInput}
+                                             label="Purchase Order Name:"
+                                             data-field="name"
+                                             message-when-value-missing="Name required!"
+                                             required>
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <div class="slds-p-around_small">
+                                <c-custom-lookup onsearch={handleLookupSearch}
+                                                 onselectionchange={handleLookupSelectionChange}
+                                                 errors={productLookupErrors}
+                                                 label="Select a product"
+                                                 placeholder="Search Product"
+                                                 icon="standard:product"
+                                                 required>
+                                </c-custom-lookup>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+
+                <lightning-layout-item size="12">
+                    <lightning-layout>
+                        <lightning-layout-item size="6" class="slds-border_right">
+                            <lightning-input class="slds-p-around_small"
+                                             label="Unit Price:"
+                                             type="number"
+                                             value={unitPrice}
+                                             disabled="true"
+                            >
+                            </lightning-input>
+                        </lightning-layout-item>
+                        <lightning-layout-item size="6">
+                            <lightning-input class="slds-p-around_small"
+                                             type="number"
+                                             onchange={handleQuantityInput}
+                                             label="Quantity:"
+                                             data-field="quantity"
+                                             min="0"
+                                             required>
+                            </lightning-input>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                </lightning-layout-item>
+            </lightning-layout>
+        </div>
+
+        <div slot="footer">
+            <lightning-button
+                    variant="brand"
+                    label="Cancel"
+                    onclick={handleCancel}
+            ></lightning-button>
+            <lightning-button
+                    class="slds-m-left_x-small"
+                    variant="brand"
+                    label="Save"
+                    type="submit"
+                    onclick={handleSubmit}
+            ></lightning-button>
+        </div>
+    </lightning-quick-action-panel>
+</template>
