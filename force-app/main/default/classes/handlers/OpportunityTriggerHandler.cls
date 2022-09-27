@@ -12,32 +12,6 @@ public with sharing class OpportunityTriggerHandler extends AbstractTriggerHandl
         this.oldOpportunitiesById = oldValueById;
     }
 
-    public override void handler() {
-        switch on Trigger.operationType {
-            when BEFORE_INSERT {
-                this.beforeInsert();
-            }
-            when AFTER_INSERT {
-                this.afterInsert();
-            }
-            when BEFORE_UPDATE {
-                this.beforeUpdate();
-            }
-            when AFTER_UPDATE {
-                this.afterUpdate();
-            }
-            when BEFORE_DELETE {
-                this.beforeDelete();
-            }
-            when AFTER_DELETE {
-                this.afterDelete();
-            }
-            when AFTER_UNDELETE {
-                this.afterUndelete();
-            }
-        }
-    }
-
     public override void afterUpdate() {
         OpportunityService.decreasedProductQuantity(newOpportunitiesById, oldOpportunitiesById);
     }

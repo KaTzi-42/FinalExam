@@ -1,6 +1,6 @@
 public with sharing class OpportunitySelector {
 
-    public static List<OpportunityLineItem> getOppItemWithProduct(Set<Id> ids) {
+    public static List<OpportunityLineItem> getOppItemWithProduct(Set<Id> oppIds) {
         return [
                 SELECT
                         Id,
@@ -10,7 +10,7 @@ public with sharing class OpportunitySelector {
                         Product2.Quantity__c,
                         Product2.Name
                 FROM OpportunityLineItem
-                WHERE OpportunityId IN :ids
+                WHERE OpportunityId IN :oppIds
         ];
     }
 }

@@ -1,20 +1,23 @@
 public with sharing class OpportunityService {
 
-    public static void decreasedProductQuantity(Map<Id, Opportunity> opportunityMap, Map<Id, Opportunity> oldOpportunityMap) {
-        Set<Id> completeOpportunitiesIds = new Set<Id>();
+    public static void decreasedProductQuantity(
+            Map<Id, Opportunity> opportunityMap,
+            Map<Id, Opportunity> oldOpportunityMap) {
+
+        Set<Id> closedOpportunitiesIds = new Set<Id>();
         for (Id key : opportunityMap.keySet()) {
             if (opportunityMap.get(key).StageName == 'Closed Won' &&
                     oldOpportunityMap.get(key).StageName != 'Closed Won') {
-                completeOpportunitiesIds.add(key);
+                closedOpportunitiesIds.add(key);
             }
         }
 
-        if (completeOpportunitiesIds.isEmpty()) {
+        if (closedOpportunitiesIds.isEmpty()) {
             return;
         }
 
         List<OpportunityLineItem> oppItemWithProduct =
-                OpportunitySelector.getOppItemWithProduct(completeOpportunitiesIds);
+                OpportunitySelector.getOppItemWithProduct(closedOpportunitiesIds);
 
         List<Product2> productToDecrease = new List<Product2>();
         for (OpportunityLineItem opp : oppItemWithProduct) {
