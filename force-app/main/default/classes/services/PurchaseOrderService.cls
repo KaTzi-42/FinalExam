@@ -19,6 +19,7 @@ public with sharing class PurchaseOrderService {
         List<Purchase_Order_Line_Item__c> lineItems =
                 PurchaseOrderLineItemSelector.getPurOrderLineItemsWithProduct(completedPurOrdersIds);
         List<Product2> productsToUpdate = new List<Product2>();
+
         for (Purchase_Order_Line_Item__c item : lineItems) {
             item.Product__r.Quantity__c += item.Quantity__c;
             productsToUpdate.add(item.Product__r);

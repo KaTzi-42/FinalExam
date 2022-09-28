@@ -1,11 +1,12 @@
 import {LightningElement, api} from 'lwc';
 import {CloseActionScreenEvent} from "lightning/actions";
 import {ShowToastEvent} from "lightning/platformShowToastEvent";
+import {NavigationMixin} from 'lightning/navigation';
 import searchProductsByName from '@salesforce/apex/ProductController.searchProductsByName'
 import createPurchaseOrder from '@salesforce/apex/PurchaseOrderController.createPurchaseOrder'
 import createPurchaseOrderLineItem from '@salesforce/apex/PurchaseOrderLineItemController.createPurchaseOrderLineItem'
 
-export default class CreatePurchaseOrder extends LightningElement {
+export default class CreatePurchaseOrder extends NavigationMixin(LightningElement) {
     @api recordId;
 
     product;
@@ -74,10 +75,16 @@ export default class CreatePurchaseOrder extends LightningElement {
                 price: this.unitPrice
             })
 
+            const url = await this._createLinkToNewRecord(orderId, 'view');
+
             this.dispatchEvent(new ShowToastEvent({
-                title: 'Success',
-                message: 'Purchase Order created',
-                variant: 'success',
+                title: 'Success!',
+                message: '{0} created!',
+                messageData: [{
+                    url,
+                    label: 'Order Purchase',
+                }],
+                variant: 'success'
             }));
         } catch (e) {
             this.dispatchEvent(new ShowToastEvent({
@@ -100,5 +107,15 @@ export default class CreatePurchaseOrder extends LightningElement {
         }
 
         return selection;
+    }
+
+    _createLinkToNewRecord(id, action) {
+        return this[NavigationMixin.GenerateUrl]({
+            type: 'standard__recordPage',
+            attributes: {
+                recordId: id,
+                actionName: action
+            }
+        });
     }
 }

@@ -52,10 +52,6 @@ export default class Lookup extends LightningElement {
     @api
     set errors(value) {
         this._errors = value;
-        // Blur component if errors are passed
-        if (this._errors?.length > 0) {
-            this.blur();
-        }
     }
 
     get errors() {
@@ -71,7 +67,6 @@ export default class Lookup extends LightningElement {
 
         this._searchResults = resultsLocal.map((result) => {
             result.title = result.Name;
-            result.subtitle = result.Id;
             result.icon = this.icon;
 
             return result;
