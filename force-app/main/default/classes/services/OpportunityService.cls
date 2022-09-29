@@ -19,7 +19,7 @@ public with sharing class OpportunityService {
         List<OpportunityLineItem> oppItemWithProduct =
                 OpportunitySelector.getOppItemWithProduct(closedOpportunitiesIds);
 
-        List<Product2> productToDecrease = new List<Product2>();
+        Map<Id, Product2> productToDecrease = new  Map<Id, Product2>();
         for (OpportunityLineItem opp : oppItemWithProduct) {
             if (opp.Product2.Quantity__c - opp.Quantity < 0) {
                 opportunityMap.get(opp.OpportunityId).addError(
@@ -28,9 +28,9 @@ public with sharing class OpportunityService {
             }
 
             opp.Product2.Quantity__c -= opp.Quantity;
-            productToDecrease.add(opp.Product2);
+            productToDecrease.put(opp.Product2Id, opp.Product2);
         }
 
-        update productToDecrease;
+        update productToDecrease.values();
     }
 }
