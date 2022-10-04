@@ -1,2 +1,2 @@
-## Progress
-![Progress](https://i.imgur.com/HYqxlu7.png)
+## Sequence diagram
+![](https://i.imgur.com/8PmUGL8.png)
